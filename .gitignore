@@ -1,0 +1,13 @@
+# Vagrant
+.vagrant
+.cache
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+*.log
+
+# Mac
+.DS_Store

@@ -1,0 +1,8 @@
+[repo-saltstack-el7]
+name=SaltStack EL7 Repo
+baseurl=https://repo.saltstack.com/yum/rhel7/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://repo.saltstack.com/yum/rhel7/SALTSTACK-GPG-KEY.pub
+enabled=1
+enabled_metadata=1

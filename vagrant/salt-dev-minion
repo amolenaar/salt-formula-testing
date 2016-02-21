@@ -1,0 +1,6 @@
+id: salt-dev
+file_client: local
+
+file_roots:
+  base:
+    - /srv/salt/
