@@ -4,7 +4,7 @@ import testinfra
 
 # docker run -i -t -v /srv/salt/:/srv/salt -v /srv/pillar/:/srv/pillar/ -v /srv/files/:/srv/files/ salt-test-base /bin/bash
 
-@pytest.fixture(scope='module', params=['centos7-salt'])
+@pytest.fixture(scope='module', params=['centos7-salt', 'ubuntu15-salt'])
 def Docker(request, LocalCommand):
     """
     Boot and stop a docker image. The image is primed with salt-minion.

@@ -3,6 +3,7 @@ base:
     - docker
     - testinfra
     - docker.centos7-salt
+    - docker.ubuntu15-salt
 
   'jenkins.*':
     - git

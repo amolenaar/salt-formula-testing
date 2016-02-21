@@ -1,10 +1,9 @@
 include:
   - docker.docker-py
 
-centos7-salt:
+ubuntu15-salt:
   dockerng.image_present:
-    - build: /srv/test/centos7-salt
+    - build: /srv/test/ubuntu15-salt
     - require:
       - sls: docker.docker-py
-
 
