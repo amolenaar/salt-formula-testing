@@ -1,4 +1,4 @@
-# Test Salt Formulas and States with ease
+# Test Salt Formulas and States with ease [![Build Status](https://travis-ci.org/amolenaar/salt-formula-testing.svg?branch=master)](https://travis-ci.org/amolenaar/salt-formula-testing)
 
 This is an example repo, showing how salt configuration can be (regression) tested with use of [Testinfra](http://testinfra.readthedocs.org/).
 
