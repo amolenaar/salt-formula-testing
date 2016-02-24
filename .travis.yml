@@ -1,0 +1,11 @@
+language: python
+python:
+  - "2.7"
+
+install: pip install testinfra
+script: cd test && testinfra -v
+
+sudo: required
+
+services:
+  - docker
