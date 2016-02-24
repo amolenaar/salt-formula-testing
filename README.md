@@ -15,7 +15,7 @@ First make sure you have Vagrant (1.8.1+) installed. From a terminal, enter the 
 
     $ vagrant up
     
-This will prepare a test machine, Don't worry, you can still change your salt formulas and tests locally. The VM will have a few docker images prepped and ready for use.
+This will prepare a test machine, Don't worry, you can still change your salt formulas and tests locally.
 
 One the machine is booted, log in to the machine and go to the folder containing the tests. From there you can run the tests:
 
