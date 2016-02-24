@@ -4,13 +4,22 @@ import testinfra
 
 # docker run -i -t -v /srv/salt/:/srv/salt -v /srv/pillar/:/srv/pillar/ -v /srv/files/:/srv/files/ salt-test-base /bin/bash
 
-@pytest.fixture(scope='module', params=['centos7-salt', 'ubuntu15-salt'])
-def Docker(request, LocalCommand):
+target_boxes = ['centos7-salt', 'ubuntu15-salt']
+
+@pytest.fixture(scope='module', params=target_boxes)
+def docker_image(request, LocalCommand):
+    cmd = LocalCommand("docker build -t %s %s", request.param, request.param)
+    assert cmd.rc == 0
+    return request.param
+    
+
+@pytest.fixture(scope='module')
+def Docker(request, docker_image, LocalCommand):
     """
     Boot and stop a docker image. The image is primed with salt-minion.
     """
     # Run a new container. Run in privileged mode, so systemd will start
-    docker_id = LocalCommand.check_output("docker run --privileged -d -v /srv/salt/:/srv/salt -v /srv/pillar/:/srv/pillar/ %s", request.param)
+    docker_id = LocalCommand.check_output("docker run --privileged -d -v /srv/salt/:/srv/salt -v /srv/pillar/:/srv/pillar/ %s", docker_image)
 
     def teardown():
         LocalCommand.check_output("docker kill %s", docker_id)
