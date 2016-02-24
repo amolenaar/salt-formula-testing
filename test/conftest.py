@@ -19,7 +19,7 @@ def Docker(request, docker_image, LocalCommand):
     Boot and stop a docker image. The image is primed with salt-minion.
     """
     # Run a new container. Run in privileged mode, so systemd will start
-    docker_id = LocalCommand.check_output("docker run --privileged -d -v /srv/salt/:/srv/salt -v /srv/pillar/:/srv/pillar/ %s", docker_image)
+    docker_id = LocalCommand.check_output("docker run --privileged -d -v ../salt/:/srv/salt -v ../pillar/:/srv/pillar/ %s", docker_image)
 
     def teardown():
         LocalCommand.check_output("docker kill %s", docker_id)
