@@ -14,25 +14,11 @@ def test_service_running(Docker):
     assert Service('jenkins').is_running
 
 
-def wait_for(check, timeout=30):
-    import time
-    timeout_at = time.time() + timeout
-    while True:
-        try:
-            assert check()
-        except AssertionError, e:
-            if timeout_at < time.time():
-                time.sleep(1)
-            else:
-                raise e
-        else:
-            return
 
-
-def test_service_listening_on_port_8080(Docker):
+def test_service_listening_on_port_8080(Docker, Slow):
     import time
     Socket = Docker.get_module("Socket")
-    wait_for(lambda: Socket("tcp://:::8080").is_listening)
+    Slow(lambda: Socket("tcp://:::8080").is_listening)
 
 
 # vim:sw=4:et:ai

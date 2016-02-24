@@ -38,4 +38,24 @@ def docker_backend_provision_as(self, minion_id):
 testinfra.backend.docker.DockerBackend.provision_as = docker_backend_provision_as
 
 
+@pytest.fixture
+def Slow():
+    """
+    Run a slow check, check if the state is correct for `timeout` seconds.
+    """
+    import time
+    def slow(check, timeout=30):
+        timeout_at = time.time() + timeout
+        while True:
+            try:
+                assert check()
+            except AssertionError, e:
+                if timeout_at < time.time():
+                    time.sleep(1)
+                else:
+                    raise e
+            else:
+                return
+    return  slow
+
 # vim:sw=4:et:ai
