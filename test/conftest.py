@@ -5,14 +5,6 @@ import testinfra
 target_boxes = ['centos7-salt', 'ubuntu15-salt']
 
 
-def root_dir():
-    """
-    Figure out the project base dir (parent folder of file)
-    """
-    from os.path import dirname
-    return dirname(dirname(__file__))
-
-
 @pytest.fixture(scope='module', params=target_boxes)
 def image_name(request):
     """
@@ -24,7 +16,9 @@ def image_name(request):
 
 @pytest.fixture(scope='module')
 def docker_image(image_name, LocalCommand):
-    cmd = LocalCommand("docker build -t %s %s", image_name, image_name)
+    from os.path import dirname
+    test_dir = dirname(__file__)
+    cmd = LocalCommand("docker build -t %s %s/%s", image_name, test_dir, image_name)
     assert cmd.rc == 0
     return image_name
     
@@ -34,15 +28,16 @@ def Docker(request, docker_image, LocalCommand):
     """
     Boot and stop a docker image. The image is primed with salt-minion.
     """
-    base = root_dir()
-    print 'Project base dir is:', base
+    from os.path import dirname
+    root_dir = dirname(dirname(__file__))
+    print 'Project root dir is:', root_dir
 
     # Run a new container. Run in privileged mode, so systemd will start
-    docker_id = LocalCommand.check_output("docker run --privileged -d -v %s/salt/:/srv/salt -v %s/pillar/:/srv/pillar/ %s", base, base, docker_image)
+    docker_id = LocalCommand.check_output("docker run --privileged -d -v %s/salt/:/srv/salt -v %s/pillar/:/srv/pillar/ %s", root_dir, root_dir, docker_image)
 
     def teardown():
-        LocalCommand.check_output("docker kill %s", docker_id)
-        LocalCommand.check_output("docker rm %s", docker_id)
+        LocalCommand("docker kill %s", docker_id)
+        LocalCommand("docker rm %s", docker_id)
 
     # At the end of each test, we destroy the container
     request.addfinalizer(teardown)
@@ -83,6 +78,6 @@ def Slow():
                     raise e
             else:
                 return
-    return  slow
+    return slow
 
 # vim:sw=4:et:ai

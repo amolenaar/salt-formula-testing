@@ -4,7 +4,7 @@ python:
 
 install: pip install testinfra
 
-script: cd test && testinfra -v
+script: testinfra -v -ra
 
 sudo: required
 
