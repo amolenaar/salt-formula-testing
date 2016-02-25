@@ -51,7 +51,7 @@ def docker_backend_provision_as(self, minion_id):
     """
     Command = self.get_module("Command")
     print 'Executing salt-call locally for id', minion_id
-    cmd = Command("salt-call --local --force-color --retcode-passthrough --id=%s.testenv state.highstate", minion_id)
+    cmd = Command("salt-call --local --force-color --retcode-passthrough --id=%s state.highstate", minion_id)
     print cmd.stdout
     assert cmd.rc == 0
     return cmd
