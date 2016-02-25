@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   end
 
   #
-  config.vm.box = "hfm4/centos7"
+  config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "salt-dev"
 
   ## For masterless, mount your salt file root
@@ -23,5 +23,6 @@ Vagrant.configure("2") do |config|
     salt.masterless = true
     salt.run_highstate = true
     salt.minion_config = "salt-dev-minion"
+    salt.verbose = true
   end
 end
