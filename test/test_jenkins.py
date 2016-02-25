@@ -14,7 +14,6 @@ def test_service_running(Docker):
     assert Service("jenkins").is_running
 
 
-
 def test_service_listening_on_port_8080(Docker, Slow):
     import time
     Socket = Docker.get_module("Socket")
