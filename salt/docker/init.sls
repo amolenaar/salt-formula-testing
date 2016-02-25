@@ -6,6 +6,8 @@ docker:
       {% elif grains['os_family'] == 'Debian' %}
       - docker.io
       {% endif %}
+  user.present:
+    - name: vagrant
   group.present:
     - system: True
     - addusers:
